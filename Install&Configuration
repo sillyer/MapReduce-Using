@@ -1,0 +1,45 @@
+#hadoop_SingleCluser
+http://hadoop.apache.org/docs/r2.6.2/hadoop-project-dist/hadoop-common/SingleCluster.html
+1.edit etc/hadoop/hadoop-env.sh
+export JAVA_HOME=/usr/java/latest
+export HADOOP_PREFIX=/usr/local/hadoop
+2.edit etc/hadoop/core-site.xml:
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+</configuration>
+3.edit etc/hadoop/hdfs-site.xml:
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+</configuration>
+4.execute
+$ bin/hdfs namenode -format
+$ sbin/start-dfs.sh
+$ bin/hdfs dfs -mkdir /user
+$ sbin/stop-dfs.sh
+
+#eclipse
+apt-get install eclipse
+
+#eclipse-plugin
+link1:https://github.com/winghc/hadoop2x-eclipse-plugin 
+link2:http://www.powerxing.com/hadoop-build-project-using-eclipse/
+Error:
+Unable to create the selected preference page. org/apache/hadoop/eclipse/preferences/MapReducePreferencePage : Unsupported major.minor version 51.0
+Solve:
+http://swapnilgoswami.blogspot.com/2014/04/how-to-upgrade-from-jdk-16-to-17-on.html
+update java 1.6 to 1.7
+sudo apt-get install openjdk-7-jre
+sudo update-alternatives --config java //chose 1.7
+
+#generate jar&run
+in eclipse
+1.http://blog.csdn.net/mango_song/article/details/8531389
+选中工程---->右键，Export...--->Java--->JAR file--->next-->选择jar file的路径及名称-->next-->next---> 选择main class--->finish
+2.export export HADOOP_CLASSPATH=MaxTemperature.jar(example_hadoop.jar)
+3.bin/hadoop MaxTemperature input/sample.txt output
